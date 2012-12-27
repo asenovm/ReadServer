@@ -5,8 +5,8 @@ import java.io.IOException;
 public class EventLoop {
 
 	public static void main(String[] args) throws IOException {
-		final BroadcastServer server = BroadcastServer.fromDefaultOptions();
-		server.waitAndHandleConnection();
+		final BroadcastServer server = BroadcastServer.fromConfiguration("server.conf");
+		server.awaitAndHandleConnection();
 	}
 
 }

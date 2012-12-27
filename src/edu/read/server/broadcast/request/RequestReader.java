@@ -1,4 +1,4 @@
-package edu.read.server.broadcast;
+package edu.read.server.broadcast.request;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,13 +10,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import edu.read.server.broadcast.response.JsonMessage;
+
 public class RequestReader {
-
-	private static final String KEY_STATUS_CODE = "status";
-
-	public static final String KEY_ID = "id";
-
-	public static final String KEY_MESSAGE = "message";
 
 	private static final int READ_BLOCK_SIZE = 512;
 
@@ -48,10 +44,8 @@ public class RequestReader {
 
 	private RequestReader(final InputStream inputStream) throws ReadException {
 		try {
-			final String request = new String(readFromStream(inputStream)).trim();
-			System.out.println("*********************request is ************************");
-			System.out.println(request);
-			System.out.println("*********************request end ************************");
+			final String request = new String(readFromStream(inputStream))
+					.trim();
 			final JsonElement element = new JsonParser().parse(new String(
 					request));
 			parsedRequest = element.getAsJsonObject();
@@ -65,15 +59,15 @@ public class RequestReader {
 	}
 
 	public String getMessage() {
-		return parsedRequest.get(KEY_MESSAGE).getAsString();
+		return parsedRequest.get(JsonMessage.KEY_MESSAGE).getAsString();
 	}
 
 	public String getClientId() {
-		return parsedRequest.get(KEY_ID).getAsString();
+		return parsedRequest.get(JsonMessage.KEY_ID).getAsString();
 	}
 
 	public int getStatusCode() {
-		return parsedRequest.get(KEY_STATUS_CODE).getAsInt();
+		return parsedRequest.get(JsonMessage.KEY_STATUS_CODE).getAsInt();
 	}
 
 	private byte[] readFromStream(final InputStream inputStream)

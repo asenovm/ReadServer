@@ -1,4 +1,7 @@
-package edu.read.server.broadcast;
+package edu.read.server.broadcast.response;
+
+import edu.read.server.broadcast.BroadcastServer;
+import edu.read.server.broadcast.request.ClientRequest;
 
 public class UnregisterResponse extends ServerResponse {
 
@@ -8,7 +11,7 @@ public class UnregisterResponse extends ServerResponse {
 
 	@Override
 	public void execute(final BroadcastServer server) {
-
+		server.unregister(request.getAddress());
 	}
 
 }

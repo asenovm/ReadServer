@@ -1,4 +1,4 @@
-package edu.read.server.broadcast;
+package edu.read.server.broadcast.request;
 
 public enum RequestType {
 	REGISTER, ANSWERED, UNREGISTER, UNKNOWN;

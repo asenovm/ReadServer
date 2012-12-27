@@ -1,4 +1,4 @@
-package edu.read.server.broadcast;
+package edu.read.server.broadcast.request;
 
 import java.net.InetAddress;
 
@@ -24,6 +24,10 @@ public class ClientRequest {
 
 	public InetAddress getAddress() {
 		return reader.getAddress();
+	}
+	
+	public String getSender(){
+		return reader.getClientId();
 	}
 
 	@Override

@@ -2,7 +2,10 @@ package edu.read.server.broadcast;
 
 import java.net.Socket;
 
-import edu.read.server.broadcast.RequestReader.ReadException;
+import edu.read.server.broadcast.request.ClientRequest;
+import edu.read.server.broadcast.request.RequestReader;
+import edu.read.server.broadcast.request.RequestReader.ReadException;
+import edu.read.server.broadcast.response.ServerResponse;
 
 public class ServerTask implements Runnable {
 
