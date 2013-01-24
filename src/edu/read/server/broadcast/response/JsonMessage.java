@@ -14,6 +14,14 @@ public class JsonMessage {
 
 	private final JsonObject message;
 
+	/**
+	 * Creates a new json message from the parameters given.
+	 * 
+	 * @param sender
+	 *            the id of the sender of the message
+	 * @param message
+	 *            the message that is to be sent
+	 */
 	public JsonMessage(final String sender, final String message) {
 		this.message = new JsonObject();
 		this.message.add(KEY_ID, new JsonPrimitive(sender));

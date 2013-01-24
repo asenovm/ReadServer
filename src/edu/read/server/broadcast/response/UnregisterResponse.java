@@ -9,6 +9,9 @@ public class UnregisterResponse extends ServerResponse {
 		super(request);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void execute(final BroadcastServer server) {
 		server.unregister(request.getAddress());

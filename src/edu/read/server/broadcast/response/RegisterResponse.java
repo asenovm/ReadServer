@@ -9,6 +9,9 @@ public class RegisterResponse extends ServerResponse {
 		super(request);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void execute(final BroadcastServer server) {
 		server.register(request.getAddress(), request.getSender());

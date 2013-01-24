@@ -28,6 +28,18 @@ public class RequestReader {
 		}
 	}
 
+	/**
+	 * Creates a new {@link RequestReader} given from the <tt>socket</tt>
+	 * specified
+	 * 
+	 * @param socket
+	 *            the socket from which this reader is to be reading from
+	 * @return the {@link RequestReader} instance that is to be used for reading
+	 *         from the socket specified
+	 * @throws ReadException
+	 *             in case the reader cannot read from the <tt>socket</tt>
+	 *             provided
+	 */
 	public static RequestReader from(final Socket socket) throws ReadException {
 		try {
 			return new RequestReader(socket);
@@ -46,26 +58,47 @@ public class RequestReader {
 		try {
 			final String request = new String(readFromStream(inputStream))
 					.trim();
-			final JsonElement element = new JsonParser().parse(new String(
-					request));
+			final JsonElement element = new JsonParser().parse(request);
 			parsedRequest = element.getAsJsonObject();
 		} catch (IOException ex) {
 			throw new ReadException(ex);
 		}
 	}
 
+	/**
+	 * Returns the {@link InetAddress} corresponding to the <tt>socket</tt>
+	 * provided
+	 * 
+	 * @return the {@link InetAddress} corresponding to the <tt>socket</tt>
+	 *         provided
+	 */
 	public InetAddress getAddress() {
 		return clientAddress;
 	}
 
+	/**
+	 * Returns the message that is received in the <tt>socket</tt> specified
+	 * 
+	 * @return string representation of the message that has been received
+	 */
 	public String getMessage() {
 		return parsedRequest.get(JsonMessage.KEY_MESSAGE).getAsString();
 	}
 
+	/**
+	 * Returns the id of the client of the <tt>socket</tt> given.
+	 * 
+	 * @return id of the client of the <tt>socket</tt> given.
+	 */
 	public String getClientId() {
 		return parsedRequest.get(JsonMessage.KEY_ID).getAsString();
 	}
 
+	/**
+	 * Returns the status code, associated with the message received.
+	 * 
+	 * @return the status code, associated with the message received.
+	 */
 	public int getStatusCode() {
 		return parsedRequest.get(JsonMessage.KEY_STATUS_CODE).getAsInt();
 	}

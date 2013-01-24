@@ -9,6 +9,9 @@ public class AnswerResponse extends ServerResponse {
 		super(request);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void execute(final BroadcastServer server) {
 		server.sendBroadcast(request);
