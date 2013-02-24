@@ -4,15 +4,27 @@ import java.io.IOException;
 
 import edu.read.server.broadcast.BroadcastServer.ServerException;
 
+/**
+ * The main loop of the application.
+ * 
+ * @author martin
+ * 
+ */
 public class EventLoop {
 
+	/**
+	 * {@value}
+	 */
 	private static final String TAG = EventLoop.class.getSimpleName();
 
-	private static final String CONFIGURATION_FILE = "server.conf";
+	/**
+	 * The path to the configuration file of the server - {@value}
+	 */
+	private static final String FILE_PATH_CONFIGURATION = "server.conf";
 
 	public static void main(String[] args) throws IOException {
 		final BroadcastServer server = BroadcastServer
-				.fromConfiguration(CONFIGURATION_FILE);
+				.fromConfiguration(FILE_PATH_CONFIGURATION);
 		tryAwaitConnection(server);
 	}
 

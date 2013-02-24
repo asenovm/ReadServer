@@ -52,7 +52,8 @@ public class LogUtil {
 	}
 
 	private static String getTime() {
-		final Calendar currentCalendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
+		final Calendar currentCalendar = Calendar.getInstance(TimeZone
+				.getTimeZone("GMT+2:00"));
 		return currentCalendar.getTime().toString();
 	}
 

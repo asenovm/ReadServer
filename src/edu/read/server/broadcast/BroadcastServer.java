@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,7 +26,7 @@ public class BroadcastServer {
 
 	private final ExecutorService executor;
 
-	private final ConcurrentHashMap<InetAddress, String> listeners;
+	private final ConcurrentHashMap<InetAddress, Sender> listeners;
 
 	private final MessageSender sender;
 
@@ -77,7 +77,7 @@ public class BroadcastServer {
 	private BroadcastServer(final ServerConfiguration serverConfiguration) {
 		this.serverConfiguration = serverConfiguration;
 		executor = Executors.newCachedThreadPool();
-		listeners = new ConcurrentHashMap<InetAddress, String>();
+		listeners = new ConcurrentHashMap<InetAddress, Sender>();
 		sender = new MessageSender();
 	}
 
@@ -109,9 +109,9 @@ public class BroadcastServer {
 	 * @param senderId
 	 *            the id of the remote client
 	 */
-	public void register(final InetAddress address, final String senderId) {
+	public void register(final InetAddress address, final Sender sender) {
 		LogUtil.logInfo(TAG, "registering " + address.toString());
-		listeners.put(address, senderId);
+		listeners.put(address, sender);
 	}
 
 	/**
@@ -121,12 +121,13 @@ public class BroadcastServer {
 	 *            the request that is to be retransmitted to all the clients
 	 */
 	public void sendBroadcast(final ClientRequest request) {
-		System.out.println("message is " + request.getMessage());
-		for (final Map.Entry<InetAddress, String> each : listeners.entrySet()) {
+		for (final Entry<InetAddress, Sender> each : listeners.entrySet()) {
 			final InetAddress sendToAddress = each.getKey();
+			final Sender senderData = each.getValue();
 			if (isSendingMessage(request, sendToAddress)) {
 				try {
-					sender.sendMessageTo(sendToAddress, getJsonMessage(request));
+					sender.sendMessageTo(sendToAddress,
+							getJsonMessage(senderData, request.getMessage()));
 				} catch (IOException ex) {
 					LogUtil.logError(TAG, ex.getMessage());
 				}
@@ -137,12 +138,11 @@ public class BroadcastServer {
 	private boolean isSendingMessage(final ClientRequest request,
 			final InetAddress sendToAddress) {
 		return !sendToAddress.equals(request.getAddress())
-				|| (sendToAddress.equals(request.getAddress()) && serverConfiguration
-						.isEchoServer());
+				|| serverConfiguration.isEchoServer();
 	}
 
-	private JsonMessage getJsonMessage(final ClientRequest request) {
-		return new JsonMessage(request.getSender(), request.getMessage());
+	private JsonMessage getJsonMessage(final Sender sender, final String message) {
+		return new JsonMessage(sender, message);
 	}
 
 	/**

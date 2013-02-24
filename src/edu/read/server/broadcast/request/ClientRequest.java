@@ -2,6 +2,8 @@ package edu.read.server.broadcast.request;
 
 import java.net.InetAddress;
 
+import edu.read.server.broadcast.Sender;
+
 public class ClientRequest {
 
 	private final RequestReader reader;
@@ -58,8 +60,8 @@ public class ClientRequest {
 	 * 
 	 * @return the string representation of the id of the sender of the request
 	 */
-	public String getSender() {
-		return reader.getClientId();
+	public Sender getSender() {
+		return new Sender(reader.getClientId());
 	}
 
 	@Override
