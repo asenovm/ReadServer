@@ -14,6 +14,7 @@ public class RegisterResponse extends ServerResponse {
 	 */
 	@Override
 	public void execute(final BroadcastServer server) {
+		System.out.println("sender is " + request.getSender().getUid());
 		server.register(request.getAddress(), request.getSender());
 	}
 

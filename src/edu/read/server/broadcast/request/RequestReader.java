@@ -60,6 +60,7 @@ public class RequestReader {
 					.trim();
 			final JsonElement element = new JsonParser().parse(request);
 			parsedRequest = element.getAsJsonObject();
+			System.out.println(parsedRequest);
 		} catch (IOException ex) {
 			throw new ReadException(ex);
 		}
@@ -92,6 +93,12 @@ public class RequestReader {
 	 */
 	public String getClientId() {
 		return parsedRequest.get(JsonMessage.KEY_ID).getAsString();
+	}
+	
+	public String getClientUid(){
+		final JsonParser parser = new JsonParser();
+		final JsonObject message = parser.parse(parsedRequest.get(JsonMessage.KEY_MESSAGE).getAsString()).getAsJsonObject();
+		return message.get(JsonMessage.KEY_UID).getAsString();
 	}
 
 	/**

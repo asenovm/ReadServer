@@ -24,11 +24,11 @@ public class JsonMessage {
 	 * {@value}
 	 */
 	public static final String KEY_ID = "id";
-
+	
 	/**
 	 * {@value}
 	 */
-	public static final String KEY_SYSTEM_ID = "systemId";
+	public static final String KEY_UID = "uid";
 
 	/**
 	 * {@value}
@@ -49,15 +49,16 @@ public class JsonMessage {
 		this.message = new JsonObject();
 
 		final String senderId = sender.getId();
-		final String systemId = sender.getSystemId();
+		final String senderUid = sender.getUid();
 
 		this.message.add(KEY_ID, new JsonPrimitive(senderId));
-		this.message.add(KEY_SYSTEM_ID, new JsonPrimitive(systemId));
+		this.message.add(KEY_UID, new JsonPrimitive(senderUid));
 		this.message.add(KEY_MESSAGE, new JsonPrimitive(message));
 	}
 
 	@Override
 	public String toString() {
+		System.out.println("message is " + new Gson().toJson(message));
 		return new Gson().toJson(message);
 	}
 }

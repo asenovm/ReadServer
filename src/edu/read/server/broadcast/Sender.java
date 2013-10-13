@@ -1,6 +1,5 @@
 package edu.read.server.broadcast;
 
-import java.util.UUID;
 
 /**
  * A model class, holding data about the credentials of the sender of a
@@ -13,7 +12,7 @@ public class Sender {
 
 	private final String realId;
 
-	private final String generatedId;
+	private final String uid;
 
 	/**
 	 * Creates a new model object, holding information about the sender of a
@@ -23,9 +22,9 @@ public class Sender {
 	 *            the real id of the sender that will be shown to the other
 	 *            users of the system
 	 */
-	public Sender(final String senderId) {
+	public Sender(final String senderId, final String senderUid) {
 		this.realId = senderId;
-		generatedId = UUID.randomUUID().toString().split("-")[0];
+		this.uid = senderUid;
 	}
 
 	/**
@@ -44,7 +43,7 @@ public class Sender {
 	 * 
 	 * @return the unique id, that the server associates with each sender
 	 */
-	public String getSystemId() {
-		return generatedId;
+	public String getUid() {
+		return uid;
 	}
 }

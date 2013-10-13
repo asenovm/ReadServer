@@ -61,7 +61,7 @@ public class ClientRequest {
 	 * @return the string representation of the id of the sender of the request
 	 */
 	public Sender getSender() {
-		return new Sender(reader.getClientId());
+		return new Sender(reader.getClientId(), reader.getClientUid());
 	}
 
 	@Override

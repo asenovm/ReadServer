@@ -37,6 +37,7 @@ public class EventLoop {
 	}
 
 	private static void reportError(ServerException ex) {
+		ex.printStackTrace();
 		LogUtil.logError(TAG, "fatal " + ex.getCause());
 	}
 
